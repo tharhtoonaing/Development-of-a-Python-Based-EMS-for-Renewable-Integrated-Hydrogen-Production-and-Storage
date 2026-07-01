@@ -5,10 +5,9 @@ This project starts with a hydrogen production calculator and will later be expa
 ## Current features
 - Calculates hydrogen production from electrolyzer power, operating hours, and efficiency
 - Uses HHV of hydrogen as the energy basis
-- Add hourly solar 
+- Add hourly solar and wind input
 
 ## Next steps
-- and wind input
 - Add hydrogen storage tank
 - Add hydrogen demand
 - Add battery storage
