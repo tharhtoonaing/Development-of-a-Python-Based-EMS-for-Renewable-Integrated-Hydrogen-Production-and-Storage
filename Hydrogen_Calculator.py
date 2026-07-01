@@ -1,5 +1,8 @@
 # Hourly Hydrogen Production from Renewable Power
 
+# Hydrogen Production from Solar + Wind Power
+
+
 def calculate_hydrogen(electrolyzer_power_kw, operation_hours, efficiency):
     h2_hhv_kwh_per_kg = 39.4  # kWh/kg H2
 
@@ -11,27 +14,38 @@ def calculate_hydrogen(electrolyzer_power_kw, operation_hours, efficiency):
 
 
 # Input data
-renewable_power_kw = [0, 0, 100, 300, 600, 800, 700, 400, 100, 0]
+solar_power_kw = [0, 0, 100, 300, 600, 800, 700, 400, 100, 0]
+wind_power_kw = [300, 450, 500, 350, 200, 150, 400, 700, 900, 600]
+
+operation_hours = 1
 efficiency = 0.75
-operation_hours = 1  # each step is 1 hour
 
 total_hydrogen_kg = 0
 total_electricity_kwh = 0
 
-print("Hourly Hydrogen Production")
-print("--------------------------")
+print("Hourly Hydrogen Production from Solar + Wind")
+print("------------------------------------------------")
 
-for hour, power in enumerate(renewable_power_kw):
+for hour in range(len(solar_power_kw)):
+    solar_power = solar_power_kw[hour]
+    wind_power = wind_power_kw[hour]
+    total_power = solar_power + wind_power
+
     electricity, useful_energy, hydrogen = calculate_hydrogen(
-        power, operation_hours, efficiency)
+        total_power,
+        operation_hours,
+        efficiency
+    )
 
     total_hydrogen_kg += hydrogen
     total_electricity_kwh += electricity
 
     print("Hour:", hour,
-          "| Power:", power, "kW",
+          "| Solar:", solar_power, "kW",
+          "| Wind:", wind_power, "kW",
+          "| Total power:", total_power, "kW",
           "| H2 produced:", round(hydrogen, 2), "kg")
 
-print("--------------------------")
+print("------------------------------------------------")
 print("Total electricity used:", total_electricity_kwh, "kWh")
 print("Total hydrogen produced:", round(total_hydrogen_kg, 2), "kg")
