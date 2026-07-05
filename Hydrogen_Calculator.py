@@ -18,7 +18,11 @@ solar_power_kw = [0, 0, 100, 300, 600, 800, 700, 400, 100, 0]
 wind_power_kw = [300, 450, 500, 350, 200, 150, 400, 700, 900, 600]
 
 operation_hours = 1
-efficiency = 0.75
+
+# 3. Electrolyzer data
+electrolyzer_type = "PEM"
+electrolyzer_capacity_kw = 700
+efficiency = 0.65
 
 total_hydrogen_kg = 0
 total_electricity_kwh = 0
@@ -30,9 +34,10 @@ for hour in range(len(solar_power_kw)):
     solar_power = solar_power_kw[hour]
     wind_power = wind_power_kw[hour]
     total_power = solar_power + wind_power
-
+    used_power = min(total_power, electrolyzer_capacity_kw)
+    curtailed_power = total_power - used_power
     electricity, useful_energy, hydrogen = calculate_hydrogen(
-        total_power,
+        used_power,
         operation_hours,
         efficiency
     )
@@ -43,7 +48,8 @@ for hour in range(len(solar_power_kw)):
     print("Hour:", hour,
           "| Solar:", solar_power, "kW",
           "| Wind:", wind_power, "kW",
-          "| Total power:", total_power, "kW",
+          "| Used power:", used_power, "kW",
+          "| Curtailed power:", curtailed_power, "kW",
           "| H2 produced:", round(hydrogen, 2), "kg")
 
 print("------------------------------------------------")
