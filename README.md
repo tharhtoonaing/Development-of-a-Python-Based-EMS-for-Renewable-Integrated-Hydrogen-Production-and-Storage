@@ -17,7 +17,13 @@ Solar + Offshore Wind + Onshore Wind → Electrolyzer → Hydrogen Production
 
 At this stage, the model does not include battery storage or hydrogen storage.
 
-## Data
+## Data Source
+
+The renewable generation data was obtained from Open Power System Data:
+
+```text
+https://data.open-power-system-data.org/weather_data/latest/
+```
 
 The model uses a cleaned Germany-only dataset:
 
@@ -53,6 +59,12 @@ Data/de_generation_actual_2019_60min.csv
 * Add plots with matplotlib
 * Compare electrolyzer capacities
 * Analyze curtailed energy
+* Add optimization or machine learning later
+
+## Purpose
+
+The purpose of this project is to model renewable hydrogen production from real solar and wind data while considering electrolyzer efficiency, capacity limits, and curtailed energy.
+
 * Add optimization or machine learning later
 
 ## Purpose
