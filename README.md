@@ -1,67 +1,61 @@
 # Hydrogen EMS Python Project
 
-This project is a beginner-friendly Python model for renewable hydrogen production. It calculates hydrogen production from solar and wind power using an electrolyzer.
+This project is a Python-based model for renewable hydrogen production using real solar and wind generation data from Germany.
 
 ## Current Features
 
-* Calculates hydrogen production from electrolyzer power, operating time, and efficiency
-* Uses HHV of hydrogen as the energy basis
-* Includes hourly solar power input
-* Includes hourly wind power input
-* Combines solar and wind power
-* Adds electrolyzer capacity limit
-* Calculates curtailed renewable power when available power is higher than electrolyzer capacity
+* Uses Germany 2019 hourly renewable generation data
+* Includes solar, offshore wind, and onshore wind actual generation
+* Calculates total renewable power
+* Applies electrolyzer capacity limit
+* Calculates curtailed renewable power
+* Estimates hydrogen production using electrolyzer efficiency
 
-## Current System
+## System Overview
 
-Solar Power + Wind Power → Electrolyzer → Hydrogen Production
+Solar + Offshore Wind + Onshore Wind → Electrolyzer → Hydrogen Production
 
-At the current stage, the system does not include a battery or hydrogen storage tank yet.
+At this stage, the model does not include battery storage or hydrogen storage.
 
-## Assumptions
+## Data
 
-* Electrolyzer type: PEM
-* Electrolyzer capacity: 700 kW
-* Electrolyzer efficiency: 65%
-* Hydrogen HHV: 39.4 kWh/kg
+The model uses a cleaned Germany-only dataset:
+
+```text
+Data/de_generation_actual_2019_60min.csv
+```
+
+The original Excel file is not included because it is too large.
+
+## Units and Assumptions
+
+* Power: MW
+* Energy: MWh
+* Hydrogen HHV: 0.0394 MWh/kg
 * Time step: 1 hour
+* Electrolyzer type: PEM
+* Electrolyzer efficiency: 65%
 
-## Example Calculation Logic
+## Project Files
 
-The model first calculates total renewable power:
-
-```python
-total_power = solar_power + wind_power
-```
-
-Then it limits the power based on electrolyzer capacity:
-
-```python
-used_power = min(total_power, electrolyzer_capacity_kw)
-```
-
-Curtailed power is calculated as:
-
-```python
-curtailed_power = total_power - used_power
-```
-
-Hydrogen production is then calculated using:
-
-```python
-hydrogen_produced_kg = useful_energy_kwh / h2_hhv_kwh_per_kg
+```text
+main.py
+hydrogen_calculator.py
+prepare_generation_data.py
+README.md
+Data/de_generation_actual_2019_60min.csv
 ```
 
 ## Next Steps
 
 * Add hydrogen storage tank
 * Add hydrogen demand
-* Track hydrogen storage level hour by hour
-* Add plots using matplotlib
-* Add CSV input data using pandas
-* Compare PEM and alkaline electrolyzer operation
-* Later add machine learning or optimization features
+* Add plots with matplotlib
+* Compare electrolyzer capacities
+* Analyze curtailed energy
+* Add optimization or machine learning later
 
 ## Purpose
 
-The purpose of this project is to develop a Python-based model for renewable hydrogen production and energy management. The project focuses on simulating hydrogen production from solar and wind power, considering electrolyzer efficiency, capacity limits, and curtailed renewable energy. It will be gradually expanded with hydrogen storage, demand profiles, data analysis, and optimization features.
+The purpose of this project is to model renewable hydrogen production from real solar and wind data while considering electrolyzer efficiency, capacity limits, and curtailed energy.
+
