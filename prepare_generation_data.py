@@ -43,21 +43,26 @@ def load_de_generation_data(file_path, sheet_name="60min"):
     return df
 
 
-file_path = "Data/weather data 2020.xlsx"
+if __name__ == "__main__":
+    file_path = "Data/weather data 2020.xlsx"
+    output_path = "Data/de_generation_actual_2019_60min.csv"
 
-df = load_de_generation_data(file_path, sheet_name="60min")
+    df = load_de_generation_data(file_path, sheet_name="60min")
 
-# Filter the dataframe to keep only Germany 2019 hourly data
-df_2019 = df[
-    (df["utc_timestamp"] >= "2019-01-01 00:00:00") &
-    (df["utc_timestamp"] < "2020-01-01 00:00:00")
-]
+    # Filter the dataframe to keep only Germany 2019 hourly data
+    df_2019 = df[
+        (df["utc_timestamp"] >= "2019-01-01 00:00:00")
+        & (df["utc_timestamp"] < "2020-01-01 00:00:00")
+    ]
 
-df_2019 = df_2019.reset_index(drop=True)
+    df_2019 = df_2019.reset_index(drop=True)
 
-print(df_2019.head())
-print(df_2019.tail())
-print(df_2019.info())
-print("Number of rows:", len(df_2019))
+    print(df_2019.head())
+    print(df_2019.tail())
+    print(df_2019.info())
+    print("Number of rows:", len(df_2019))
 
-df_2019.to_csv("Data/de_generation_actual_2019_60min.csv", index=False)
+    df_2019.to_csv(output_path, index=False)
+
+    print("Cleaned data saved to:", output_path)
+    print("Number of rows:", len(df_2019))
